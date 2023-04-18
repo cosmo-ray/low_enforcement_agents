@@ -31,6 +31,7 @@
   (define lof_action
     (lambda (wid eves)
       ;; if keydown is push
+      (display "action !\n")
       (if (yevIsGrpDown eves (yeGet wid "down_k")) (move_down wid))
       (if (yevIsGrpDown eves (yeGet wid "up_k")) (move_up wid))
       YEVE_ACTION
@@ -76,10 +77,13 @@
       ;; action callback called at each tick
       (yeCreateFunction "lof_action" wid "action")
       ;; set to real time
-      (ywSetTurnLengthOverwrite -1)
+      (ywSetTurnLengthOverwrite 100000)
+      (yePrint (ygFileToEnt YJSON "levels.json"))
+
       ;; canvas widget, and set a white background
       ;; yaeString is like yeCreateString, but yeCreateString return the string,
       ;; and yae, it's parent
+      (y_canvas_mk_menu "hello!!\n")
       (ywidNewWidget (yaeString "rgba: 255 255 255 255" wid "background") "canvas")
       )
     )
@@ -91,6 +95,7 @@
 	(display "low_enforcement_agents INIT \n\n")
 	;; add smart_cobject, so we can use smart_cobject functions (yGeneric*)
 	(ygAddModule Y_MOD_YIRL mod "smart_cobject")
+	(ygAddModule Y_MOD_LOCAL mod "./canvas-menu")
 	;; ygInitWidgetModule simplify the creation of a mod that contain only a widget
 	;; it also add a starting widget of that widget
 	;; if you want to do that manially, you can do it like it's done in pong
